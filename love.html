@@ -101,7 +101,35 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
             adjustCodePosition();
             $("#code").typewriter();
         }
+	    
+function autoPlay(id) {
+      var audio = document.getElementById(id);
+      if (window.WeixinJSBridge) {
+        WeixinJSBridge.invoke(
+          "getNetworkType",
+          {},
+          function(e) {
+            audio.play();
+          },
+          false
+        );
+      } else {
+        document.addEventListener(
+          "WeixinJSBridgeReady",
+          function() {
+            WeixinJSBridge.invoke("getNetworkType", {}, function(e) {
+              audio.play();
+            });
+          },
+          false
+        );
+      }
+      audio.play();
+
+      return false;
+    }
+    autoPlay("video");
     </script>
-	<audio src="shangfen.mp3" autoplay="autoplay"></audio>
+	<audio id="audio" src="shangfen.mp3" autoplay loop="loop"></audio>
 </body>
 </html>
